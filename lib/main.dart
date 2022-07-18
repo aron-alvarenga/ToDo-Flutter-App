@@ -7,7 +7,9 @@ import 'package:path_provider/path_provider.dart';
 void main() {
   runApp(
     const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Home(),
+      title: 'ToDo App',
     ),
   );
 }
@@ -24,7 +26,49 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('To Do App'),
+          backgroundColor: Colors.red,
+          centerTitle: true,
+        ),
+        body: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        labelText: 'New task',
+                        labelStyle: TextStyle(
+                          color: Colors.red,
+                        ),
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.red),
+                        ),
+                      ),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Icon(Icons.plus_one),
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.red,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ));
   }
 
   Future<File> _getFile() async {
