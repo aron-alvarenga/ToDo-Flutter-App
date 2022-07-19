@@ -22,13 +22,35 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final _toDoController = TextEditingController();
   List _toDoList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _readData().then((data) {
+      setState(() {
+        _toDoList = json.decode(data);
+      });
+    });
+  }
+
+  void _addToDo() {
+    setState(() {
+      Map<String, dynamic> newToDo = Map();
+      newToDo["title"] = _toDoController.text;
+      _toDoController.text = "";
+      newToDo["isDone"] = false;
+      _toDoList.add(newToDo);
+      _saveData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('To Do App'),
+          title: const Text('To Do App'),
           backgroundColor: Colors.red,
           centerTitle: true,
         ),
@@ -38,9 +60,10 @@ class _HomeState extends State<Home> {
               padding: const EdgeInsets.fromLTRB(17.0, 1.0, 7.0, 1.0),
               child: Row(
                 children: [
-                  const Expanded(
+                  Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: _toDoController,
+                      decoration: const InputDecoration(
                         labelText: 'New task',
                         labelStyle: TextStyle(
                           color: Colors.red,
@@ -58,13 +81,38 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: _addToDo,
                     child: const Icon(Icons.plus_one),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red,
                     ),
                   ),
                 ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.only(top: 10.0),
+                itemCount: _toDoList.length,
+                itemBuilder: (context, index) {
+                  return CheckboxListTile(
+                    title: Text(_toDoList[index]["title"]),
+                    value: _toDoList[index]["isDone"],
+                    secondary: CircleAvatar(
+                      child: Icon(
+                        _toDoList[index]["isDone"] ? Icons.check : Icons.error,
+                        color: Colors.white,
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                    onChanged: (bool? value) {
+                      setState(() {
+                        _toDoList[index]["isDone"] = value;
+                        _saveData();
+                      });
+                    },
+                  );
+                },
               ),
             ),
           ],
