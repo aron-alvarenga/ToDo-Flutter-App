@@ -7,6 +7,11 @@ Aplicação Mobile em Flutter - To Do App (Gestão de Tarefas).
 - Flutter: v. 2.5.1
 - Dart: v. 2.14.2
 - Path Provider: v. 1.1.0
+- Fonte: DotGothic16
+
+## ❗ Importante
+
+Necessário incluir o trecho `--no-sound-null-safety` ao final do comando `flutter run`.
 
 ## 🖼️ Imagens
 

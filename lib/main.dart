@@ -14,6 +14,7 @@ void main() {
       home: const Home(),
       title: 'ToDo App',
       theme: ThemeData(
+        fontFamily: 'DotGothic16',
         snackBarTheme: const SnackBarThemeData(
           actionTextColor: Colors.white,
         ),
@@ -109,7 +110,14 @@ class _HomeState extends State<Home> {
                 ),
                 ElevatedButton(
                   onPressed: _addToDo,
-                  child: const Icon(Icons.plus_one),
+                  // child: const Icon(Icons.plus_one),
+                  child: const Text(
+                    '+1',
+                    style: TextStyle(
+                      fontSize: 25.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                   style: ElevatedButton.styleFrom(
                     primary: Colors.red,
                   ),
